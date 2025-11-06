@@ -5,20 +5,25 @@
  * 사용자가 입력한 데이터를 부모 컴포넌트로 전달합니다.
  */
 
-import { useState, type FormEvent } from 'react';
-import { categoryOptions, type NewWishlistItem, type Category } from '@/types/wishlist';
-import { Card, CardContent, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  categoryOptions,
+  type Category,
+  type NewWishlistItem,
+} from "@/types/wishlist";
+import { PlusIcon } from "lucide-react";
+import { useState, type FormEvent } from "react";
 
 interface AddItemFormProps {
   onSubmit: (item: NewWishlistItem) => void;
@@ -40,12 +45,12 @@ export function AddItemForm({ onSubmit }: AddItemFormProps) {
    * 각 입력 필드마다 하나씩 state를 만들어서 관리합니다.
    * state가 변경되면 화면이 자동으로 다시 그려집니다.
    */
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
-  const [category, setCategory] = useState<Category>('electronics');
-  const [description, setDescription] = useState('');
-  const [link, setLink] = useState('');
-  const [image, setImage] = useState('');
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState<Category>("electronics");
+  const [description, setDescription] = useState("");
+  const [link, setLink] = useState("");
+  const [image, setImage] = useState("");
 
   /**
    * 폼 제출 처리 함수
@@ -58,14 +63,14 @@ export function AddItemForm({ onSubmit }: AddItemFormProps) {
 
     // 필수 입력 검증
     if (!name.trim() || !price) {
-      alert('상품명과 가격은 필수 입력 항목입니다.');
+      alert("상품명과 가격은 필수 입력 항목입니다.");
       return;
     }
 
     // 가격 유효성 검증
     const priceNum = parseFloat(price);
     if (isNaN(priceNum) || priceNum <= 0) {
-      alert('올바른 가격을 입력해주세요.');
+      alert("올바른 가격을 입력해주세요.");
       return;
     }
 
@@ -76,26 +81,24 @@ export function AddItemForm({ onSubmit }: AddItemFormProps) {
       category,
       description: description.trim() || undefined,
       link: link.trim() || undefined,
-      image: image.trim() || undefined
+      image: image.trim() || undefined,
     };
 
     // 부모 컴포넌트의 onSubmit 함수 호출
     onSubmit(newItem);
 
     // 폼 초기화 (입력 필드 비우기)
-    setName('');
-    setPrice('');
-    setCategory('electronics');
-    setDescription('');
-    setLink('');
-    setImage('');
+    setName("");
+    setPrice("");
+    setCategory("electronics");
+    setDescription("");
+    setLink("");
+    setImage("");
   };
 
   return (
-    <Card className="w-full">
-      <CardContent className="pt-6">
-        <CardTitle className="mb-6">새 상품 추가하기 ➕</CardTitle>
-
+    <Card className="w-full bg-white">
+      <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* 상품명 입력 */}
           <div className="space-y-2">
@@ -141,7 +144,10 @@ export function AddItemForm({ onSubmit }: AddItemFormProps) {
             <Label htmlFor="category">
               카테고리 <span className="text-main">*</span>
             </Label>
-            <Select value={category} onValueChange={(value) => setCategory(value as Category)}>
+            <Select
+              value={category}
+              onValueChange={(value) => setCategory(value as Category)}
+            >
               <SelectTrigger id="category">
                 <SelectValue placeholder="카테고리 선택" />
               </SelectTrigger>
@@ -193,8 +199,9 @@ export function AddItemForm({ onSubmit }: AddItemFormProps) {
           </div>
 
           {/* 제출 버튼 */}
-          <Button type="submit" className="w-full">
-            상품 추가하기 ✨
+          <Button type="submit" className="w-full font-bold">
+            <PlusIcon className="w-4 h-4" />
+            상품 추가하기
           </Button>
         </form>
       </CardContent>

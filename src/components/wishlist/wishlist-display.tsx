@@ -5,15 +5,15 @@
  * 각 상품마다 삭제 버튼과 구매 링크 버튼을 제공합니다.
  */
 
-import { categoryLabels, type WishlistItem } from '@/types/wishlist';
+import { categoryLabels, type WishlistItem } from "@/types/wishlist";
 import {
   Card,
   CardContent,
   CardDescription,
   CardTitle,
-  CardAction
-} from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+  CardAction,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 /**
  * Props 타입 정의
@@ -48,13 +48,13 @@ export function WishlistDisplay({ items, onDelete }: WishlistDisplayProps) {
   // 찜 목록이 비어있을 때 안내 메시지 표시
   if (items.length === 0) {
     return (
-      <Card className="w-full">
-        <CardContent className="pt-6">
+      <Card className="w-full bg-white">
+        <CardContent>
           <p className="text-center text-text text-lg">
             아직 찜한 상품이 없어요! 🎁
           </p>
           <p className="text-center text-text/60 text-sm mt-2">
-            위 폼에서 상품을 추가해보세요
+            폼에서 상품을 추가해보세요!
           </p>
         </CardContent>
       </Card>
@@ -68,11 +68,14 @@ export function WishlistDisplay({ items, onDelete }: WishlistDisplayProps) {
    * key: React가 각 아이템을 구분하기 위한 고유 식별자 (필수!)
    */
   return (
-    <div className="space-y-4 w-full">
+    <div className="space-y-4 w-full bg-white">
       <h2 className="text-2xl font-bold text-text">내 찜 목록</h2>
 
       {items.map((item) => (
-        <Card key={item.id} className="w-full hover:translate-y-[-2px] transition-transform">
+        <Card
+          key={item.id}
+          className="w-full hover:translate-y-[-2px] transition-transform"
+        >
           <CardContent className="pt-6">
             <div className="flex gap-4 items-start">
               {/* 상품 이미지 썸네일 (이미지가 있을 때만 표시) */}
@@ -83,7 +86,7 @@ export function WishlistDisplay({ items, onDelete }: WishlistDisplayProps) {
                   className="w-16 h-16 object-cover rounded-base border-2 border-border"
                   onError={(e) => {
                     // 이미지 로드 실패 시 숨김 처리
-                    e.currentTarget.style.display = 'none';
+                    e.currentTarget.style.display = "none";
                   }}
                 />
               )}
@@ -118,8 +121,8 @@ export function WishlistDisplay({ items, onDelete }: WishlistDisplayProps) {
                       <Button asChild size="sm" variant="default">
                         <a
                           href={item.link}
-                          target="_blank"  // 새 탭에서 열기
-                          rel="noopener noreferrer"  // 보안을 위한 설정
+                          target="_blank" // 새 탭에서 열기
+                          rel="noopener noreferrer" // 보안을 위한 설정
                         >
                           구매하기 🛒
                         </a>
