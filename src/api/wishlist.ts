@@ -6,7 +6,9 @@ import type { WishlistItem, NewWishlistItem } from "@/types/wishlist";
 
 // --- 목록 조회 ---
 export const fetchWishlist = async (): Promise<WishlistItem[]> => {
-  const response = await apiClient.get<WishlistItem[]>(ENDPOINTS.WISHLIST.LIST);
+  const response = await apiClient._____<WishlistItem[]>(
+    ENDPOINTS.WISHLIST.LIST
+  );
   return response.data;
 };
 
@@ -14,7 +16,7 @@ export const fetchWishlist = async (): Promise<WishlistItem[]> => {
 export const addWishlistItem = async (
   newItem: NewWishlistItem
 ): Promise<WishlistItem> => {
-  const response = await apiClient.post<WishlistItem>(
+  const response = await apiClient._____<WishlistItem>(
     ENDPOINTS.WISHLIST.ADD,
     newItem
   );
@@ -23,5 +25,5 @@ export const addWishlistItem = async (
 
 // --- 삭제 ---
 export const deleteWishlistItem = async (id: string): Promise<void> => {
-  await apiClient.delete(ENDPOINTS.WISHLIST.DELETE(id));
+  await apiClient._____(ENDPOINTS.WISHLIST.DELETE(id));
 };
