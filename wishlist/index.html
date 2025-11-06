@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🛍️ 나만의 멋진 찜 목록</title>
+  <!-- CSS 연결 -->
+  <link rel="stylesheet" href="./css/style.css">
+  <!-- JavaScript 연결 -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Javascript 추가 -->
+  <script src="./js/app.js" defer></script>
+</head>
+<body>
+<header>
+  <h1>나만의 찜 목록</h1>
+</header>
+
+<main>
+
+  <section class="add-item-section card">
+    <h2>새로운 찜 상품 추가하기</h2>
+
+    <form id="item-form">
+      <div class="input-group">
+        <label for="item-name">상품명</label>
+        <input type="text" id="item-name" placeholder="예: 무선 헤드폰" required>
+      </div>
+      <div class="input-group">
+        <label for="item-price">가격</label>
+        <input type="number" id="item-price" placeholder="예: 120000" required min="0">
+      </div>
+
+      <div class="input-group">
+        <label for="item-category">카테고리</label>
+        <select id="item-category" required>
+          <option value="">카테고리 선택</option>
+          <option value="electronics">💻 전자제품</option>
+          <option value="fashion">👕 패션의류</option>
+          <option value="books">📚 도서</option>
+          <option value="living">🏠 생활용품</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label for="item-description">상품 설명 (선택)</label>
+        <textarea id="item-description" rows="3" placeholder="예: 노이즈 캔슬링 기능이 뛰어남"></textarea>
+      </div>
+      <div class="input-group">
+        <label for="item-link">구매 링크 (선택)</label>
+        <input type="url" id="item-link" placeholder="예: https://store.example.com/product/123">
+      </div>
+      <div class="input-group">
+        <label for="item-image">이미지 URL (선택)</label>
+        <input type="url" id="item-image" placeholder="예: https://example.com/image.jpg">
+      </div>
+      <button type="submit" class="primary-btn">찜 목록에 추가</button>
+    </form>
+
+  </section>
+
+  <section class="wishlist-section card">
+    <h2>내 찜 목록</h2>
+    <ul id="item-list">
+      <li class="placeholder-item">
+        <p>아직 찜한 상품이 없어요! 위에서 추가해보세요 😊</p>
+      </li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; TeamSparta All rights reserved.</p>
+</footer>
+
+</body>
+</html>
