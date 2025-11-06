@@ -27,19 +27,21 @@ export function WishlistItem({ item, onDelete }: WishlistItemProps) {
   // --- 렌더 ---
   return (
     <Card className="w-full overflow-hidden py-0 bg-white">
-      <div className="flex h-full flex-row items-center">
+      <div className="flex h-full flex-col md:flex-row items-center">
         <img
           src={item.image || "https://placehold.co/400x400?text=No+Image"}
           alt={item.name}
-          className="aspect-4/3 w-52 object-cover shrink-0 rounded-l-base"
+          className="aspect-4/3 w-full md:w-52 object-cover shrink-0"
           onError={(e) => {
             e.currentTarget.src = "https://placehold.co/600x400?text=No+Image";
           }}
         />
-        <CardContent className="flex-1 py-4 flex justify-between items-start gap-4">
+        <CardContent className="flex-1 py-4 w-full flex justify-between items-start gap-4">
           <div className="flex-1 min-w-0 space-y-2">
             <Badge variant="neutral">{categoryLabels[item.category]}</Badge>
-            <CardTitle className="text-base truncate">{item.name}</CardTitle>
+            <CardTitle className="text-base line-clamp-2">
+              {item.name}
+            </CardTitle>
             <CardDescription className="text-sm font-semibold text-main">
               {item.price.toLocaleString()}원
             </CardDescription>
