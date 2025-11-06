@@ -1,10 +1,10 @@
 <div align="center">
 
-# Web Basic
+# Web Basic - My Wishlist
 
 ![Web Basic](./assets/main.png)
 
-웹 개발 기초 입문자를 위한 학습용 프로젝트입니다. 간단한 찜 목록(위시리스트)을 만들며 React/TypeScript/HTTP 통신의 기초를 익힙니다.
+웹 개발 기초 입문자를 위한 학습용 프로젝트입니다. 간단한 찜 목록(위시리스트)을 만들며 React/HTTP 통신의 기초를 익힙니다.
 
 </div>
 
@@ -16,7 +16,7 @@
 
 ## 시작하기
 
-사전 준비: Node.js LTS와 npm이 설치되어 있어야 합니다. 이 저장소는 npm을 기본으로 사용합니다(`package-lock.json` 존재).
+사전 준비: [Node.js LTS](https://nodejs.org/ko/download)와 npm이 설치되어 있어야 합니다. 이 저장소는 npm을 기본으로 사용합니다(`package-lock.json` 존재).
 
 ```bash
 npm install           # 의존성 설치
