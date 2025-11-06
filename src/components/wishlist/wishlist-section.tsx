@@ -3,8 +3,13 @@
  *
  * 이 컴포넌트는 다음을 담당합니다:
  * 1. 찜 목록 데이터 관리 (추가, 삭제)
- * 2. 서버와의 API 통신 (데이터 불러오기, 저장하기)
- * 3. 자식 컴포넌트들 조합 (폼 + 목록)
+ * 2. 자식 컴포넌트들 조합 (폼 + 목록)
+ * 3. API 레이어를 통한 서버 데이터 통신
+ *
+ * 코드 구조:
+ * - 기존: fetch()를 컴포넌트 내부에서 직접 호출 (서버 통신 로직이 컴포넌트에 섞임)
+ * - 개선: src/api/wishlist.ts의 함수들을 import하여 사용
+ * - 장점: 화면 표시 코드와 서버 통신 코드가 분리됨
  */
 
 import { useState, useEffect } from "react";
@@ -13,11 +18,23 @@ import { AddItemForm } from "./add-item-form";
 import { WishlistDisplay } from "./wishlist-display";
 
 /**
- * API 서버 주소
- * 실제 프로젝트에서는 환경변수(.env 파일)로 관리하는 것이 좋습니다.
+ * API 레이어에서 서버 통신 함수 import
+ *
+ * 웹 애플리케이션 계층 구조:
+ * - 컴포넌트(이 파일): 화면 표시 및 사용자 상호작용 담당
+ * - API 레이어(src/api/): 서버 통신 담당
+ * - 서버: 데이터 저장 및 처리 담당
+ *
+ * 이렇게 역할을 분리하면:
+ * - 컴포넌트는 서버 통신 방법을 몰라도 됨 (함수만 호출)
+ * - 같은 API를 다른 컴포넌트에서도 재사용 가능
+ * - 코드가 깔끔하고 테스트하기 쉬움
  */
-const API_URL =
-  "https://67f20da5-b90b-45ff-a0be-7595e83c0998.mock.pstmn.io/wishlist";
+import {
+  fetchWishlist,
+  addWishlistItem,
+  deleteWishlistItem,
+} from "@/api/wishlist";
 
 export function WishlistSection() {
   /**
@@ -56,23 +73,27 @@ export function WishlistSection() {
   /**
    * 서버에서 찜 목록 불러오기 (GET 요청)
    *
-   * async/await: 비동기 작업을 동기 코드처럼 작성하는 문법
-   * - 서버 응답을 기다렸다가 다음 코드를 실행합니다
+   * 리팩토링 변화:
+   * - 기존: fetch() 직접 호출 + JSON 파싱 + 에러 처리를 컴포넌트에서 모두 처리
+   * - 개선: fetchWishlist() 함수 호출만으로 완료
+   * - 이점: 서버 통신 로직을 API 레이어에 위임하여 컴포넌트 코드가 간결해짐
    */
   const fetchItems = async () => {
     try {
       console.log("서버에서 찜 목록을 불러오는 중...");
 
-      // fetch: 브라우저에 내장된 HTTP 통신 함수
-      const response = await fetch(API_URL);
-
-      // HTTP 응답 상태 확인 (200 OK인지 체크)
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      // JSON 데이터를 JavaScript 객체로 변환
-      const data: WishlistItem[] = await response.json();
+      /**
+       * API 레이어 함수 호출
+       *
+       * fetchWishlist()는 다음을 자동으로 처리:
+       * 1. HTTP GET 요청 생성 및 전송
+       * 2. 서버 주소(Base URL) 자동 추가
+       * 3. 서버 응답을 JavaScript 객체로 변환
+       * 4. TypeScript 타입 안전성 보장
+       *
+       * 결과: 복잡한 통신 로직을 감추고 간단한 함수 호출로 사용 가능!
+       */
+      const data = await fetchWishlist();
 
       // State 업데이트 → 화면 자동 갱신
       setItems(data);
@@ -91,27 +112,29 @@ export function WishlistSection() {
 
   /**
    * 서버에 새 상품 추가하기 (POST 요청)
+   *
+   * 리팩토링 변화:
+   * - 기존: fetch() + HTTP 설정(method, headers) + JSON 변환을 컴포넌트에서 직접 처리
+   * - 개선: addWishlistItem() 함수 호출만으로 완료
+   * - 이점: HTTP 통신 복잡도를 API 레이어가 처리하여 코드가 간결해짐
    */
   const addItem = async (newItem: NewWishlistItem) => {
     try {
       if (isApiConnected) {
         console.log("서버에 새 상품을 추가하는 중...", newItem);
 
-        // POST 요청 보내기
-        const response = await fetch(API_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json", // JSON 형식으로 전송
-          },
-          body: JSON.stringify(newItem), // JavaScript 객체 → JSON 문자열
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        // 서버에서 생성된 아이템 (id 포함)
-        const createdItem: WishlistItem = await response.json();
+        /**
+         * API 레이어 함수 호출
+         *
+         * addWishlistItem()는 다음을 자동으로 처리:
+         * 1. HTTP POST 메서드 설정
+         * 2. 요청 헤더(Content-Type: application/json) 추가
+         * 3. JavaScript 객체를 JSON 문자열로 자동 변환
+         * 4. 요청/응답 로깅 (디버깅용)
+         *
+         * 결과: 복잡한 HTTP 통신 코드(약 10줄)가 단 1줄로 간소화!
+         */
+        const createdItem = await addWishlistItem(newItem);
 
         /**
          * State 업데이트: 기존 배열에 새 아이템 추가
@@ -147,20 +170,28 @@ export function WishlistSection() {
 
   /**
    * 서버에서 상품 삭제하기 (DELETE 요청)
+   *
+   * 리팩토링 변화:
+   * - 기존: fetch() + URL 조합 + DELETE 메서드 설정을 컴포넌트에서 직접 처리
+   * - 개선: deleteWishlistItem(id) 함수 호출만으로 완료
+   * - 이점: URL 조합 실수 방지, 코드 간결화
    */
   const deleteItem = async (id: string) => {
     try {
       if (isApiConnected) {
         console.log(`서버에서 상품(ID: ${id})을 삭제하는 중...`);
 
-        // DELETE 요청
-        const response = await fetch(`${API_URL}/${id}`, {
-          method: "DELETE",
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        /**
+         * API 레이어 함수 호출
+         *
+         * deleteWishlistItem(id)는 다음을 자동으로 처리:
+         * 1. HTTP DELETE 메서드 설정
+         * 2. URL에 ID를 자동으로 조합 (예: /wishlist/123)
+         * 3. 에러 발생 시 자동으로 감지하여 throw
+         *
+         * 결과: URL 조합 오류 방지, HTTP 통신 로직 숨김!
+         */
+        await deleteWishlistItem(id);
 
         console.log(`✅ 서버에서 상품(ID: ${id})이 삭제되었습니다.`);
       } else {
