@@ -12,11 +12,11 @@
  * 오타나 잘못된 값 입력을 방지합니다.
  */
 export type Category =
-  | 'electronics'  // 전자제품
-  | 'fashion'      // 패션의류
-  | 'books'        // 도서
-  | 'living'       // 생활용품
-  | 'other';       // 기타
+  | "electronics" // 전자제품
+  | "fashion" // 패션의류
+  | "books" // 도서
+  | "living" // 생활용품
+  | "other"; // 기타
 
 /**
  * 찜 상품 데이터 구조
@@ -40,25 +40,14 @@ export interface WishlistItem {
   image?: string;
 }
 
-/**
- * 새 상품 추가용 타입
- *
- * Omit<WishlistItem, 'id'>는 "WishlistItem에서 id만 빼라"는 의미
- * id는 서버에서 자동으로 만들어주기 때문에 클라이언트에서는 보내지 않습니다.
- */
-export type NewWishlistItem = Omit<WishlistItem, 'id'>;
+export type NewWishlistItem = Omit<WishlistItem, "id">;
 
-/**
- * 카테고리 영문 → 한글 변환
- *
- * 화면에 표시할 때 'electronics' 대신 '전자제품'으로 보여주기 위한 매핑
- */
 export const categoryLabels: Record<Category, string> = {
-  electronics: '전자제품',
-  fashion: '패션의류',
-  books: '도서',
-  living: '생활용품',
-  other: '기타'
+  electronics: "전자제품",
+  fashion: "패션의류",
+  books: "도서",
+  living: "생활용품",
+  other: "기타",
 };
 
 /**
@@ -67,9 +56,9 @@ export const categoryLabels: Record<Category, string> = {
  * Select(드롭다운) 컴포넌트에서 사용할 선택지 목록
  */
 export const categoryOptions: { value: Category; label: string }[] = [
-  { value: 'electronics', label: '전자제품' },
-  { value: 'fashion', label: '패션의류' },
-  { value: 'books', label: '도서' },
-  { value: 'living', label: '생활용품' },
-  { value: 'other', label: '기타' }
+  { value: "electronics", label: "전자제품" },
+  { value: "fashion", label: "패션의류" },
+  { value: "books", label: "도서" },
+  { value: "living", label: "생활용품" },
+  { value: "other", label: "기타" },
 ];
