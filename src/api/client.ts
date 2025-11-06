@@ -48,5 +48,3 @@ apiClient.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-/** 사용 예시는 코드베이스에서 제거되었습니다. */
