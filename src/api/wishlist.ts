@@ -22,12 +22,12 @@
  * - TypeScript 타입으로 안전성 확보
  */
 
-import { apiClient } from './client';
-import { ENDPOINTS } from './endpoints';
-import type { WishlistItem, NewWishlistItem } from '@/types/wishlist';
+import { apiClient } from "./client";
+import { ENDPOINTS } from "./endpoints";
+import type { WishlistItem, NewWishlistItem } from "@/types/wishlist";
 
 /**
- * 찜 목록 전체 조회 (GET /wishlist)
+ * 찜 목록 전체 조회 (GET /items)
  *
  * 웹 개발 개념:
  * - HTTP GET 요청 = 서버에서 데이터를 읽어오는 요청
@@ -53,7 +53,7 @@ export const fetchWishlist = async (): Promise<WishlistItem[]> => {
 };
 
 /**
- * 새 찜 상품 추가 (POST /wishlist)
+ * 새 찜 상품 추가 (POST /items)
  *
  * 웹 개발 개념:
  * - HTTP POST 요청 = 서버에 새 데이터를 생성하는 요청
@@ -88,12 +88,12 @@ export const addWishlistItem = async (
 };
 
 /**
- * 찜 상품 삭제 (DELETE /wishlist/:id)
+ * 찜 상품 삭제 (DELETE /items/:id)
  *
  * 웹 개발 개념:
  * - HTTP DELETE 요청 = 서버에서 데이터를 삭제하는 요청
  * - URL에 삭제할 상품의 ID를 포함하여 전송
- *   예: DELETE /wishlist/123 → ID가 123인 상품 삭제
+ *   예: DELETE /items/123 → ID가 123인 상품 삭제
  *
  * @param id - 삭제할 상품의 ID
  * @returns Promise<void> - 삭제는 반환값이 없음 (성공하면 완료)
@@ -106,12 +106,12 @@ export const addWishlistItem = async (
 export const deleteWishlistItem = async (id: string): Promise<void> => {
   // HTTP DELETE 요청 보내기
   // URL에 삭제할 ID를 포함시켜 전송
-  // ENDPOINTS.WISHLIST.DELETE(id)는 '/wishlist/123' 형태의 경로를 생성
+  // ENDPOINTS.WISHLIST.DELETE(id)는 '/items/123' 형태의 경로를 생성
   await apiClient.delete(ENDPOINTS.WISHLIST.DELETE(id));
 
-  // 삭제 요청은 보통 응답 본문이 없음 (HTTP 204 No Content)
-  // 에러가 발생하지 않으면 삭제 성공으로 간주
-  // 따라서 아무것도 반환하지 않음 (void)
+  // 레거시 규격: 삭제 성공 시 응답 본문이 없는 200 OK를 기본으로 사용
+  // (서버 설정에 따라 204 No Content도 허용)
+  // 에러가 발생하지 않으면 삭제 성공으로 간주하며 반환값은 없음 (void)
 };
 
 /**

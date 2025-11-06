@@ -32,7 +32,8 @@
  * - 환경변수로 관리하면 개발/운영 서버를 자동으로 전환 가능
  * - 예시: export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
  */
-export const API_BASE_URL = 'https://67f20da5-b90b-45ff-a0be-7595e83c0998.mock.pstmn.io';
+export const API_BASE_URL =
+  "https://2bf22259-0896-46cd-ab47-7e2acf3f5935.mock.pstmn.io";
 
 /**
  * API Endpoints (API 경로 모음)
@@ -54,9 +55,9 @@ export const API_BASE_URL = 'https://67f20da5-b90b-45ff-a0be-7595e83c0998.mock.p
 export const ENDPOINTS = {
   // 찜 목록 관련 API 경로들
   WISHLIST: {
-    LIST: '/wishlist',              // GET /wishlist - 전체 목록 조회
-    ADD: '/wishlist',                // POST /wishlist - 새 아이템 추가
-    DELETE: (id: string) => `/wishlist/${id}`, // DELETE /wishlist/:id - 특정 아이템 삭제
+    LIST: "/items", // GET /items - 전체 목록 조회
+    ADD: "/items", // POST /items - 새 아이템 추가
+    DELETE: (id: string) => `/items/${id}`, // DELETE /items/:id - 특정 아이템 삭제
   },
 } as const; // as const: TypeScript에서 읽기 전용 상수로 만듦 (실수로 수정 방지)
 
