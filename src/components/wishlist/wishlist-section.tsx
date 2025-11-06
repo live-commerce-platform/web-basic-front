@@ -12,9 +12,11 @@ import {
 } from "@/api/wishlist";
 
 export function WishlistSection() {
+  // --- 상태 ---
   const [items, setItems] = useState<WishlistItem[]>([]);
   const [isApiConnected, setIsApiConnected] = useState<boolean>(true);
 
+  // --- 초기 로드 ---
   useEffect(() => {
     console.log(
       "WishlistSection 컴포넌트가 마운트되었습니다. 초기 데이터를 불러옵니다."
@@ -27,6 +29,7 @@ export function WishlistSection() {
     };
   }, []);
 
+  // --- 데이터 불러오기 ---
   const fetchItems = async () => {
     try {
       console.log("서버에서 찜 목록을 불러오는 중...");
@@ -46,6 +49,7 @@ export function WishlistSection() {
     }
   };
 
+  // --- 아이템 추가 ---
   const addItem = async (newItem: NewWishlistItem) => {
     try {
       if (isApiConnected) {
@@ -74,6 +78,7 @@ export function WishlistSection() {
     }
   };
 
+  // --- 아이템 삭제 ---
   const deleteItem = async (id: string) => {
     try {
       if (isApiConnected) {
@@ -95,6 +100,7 @@ export function WishlistSection() {
     }
   };
 
+  // --- 렌더 ---
   return (
     <div className="w-full space-y-8">
       <div className="flex flex-col md:flex-row gap-8 items-start">

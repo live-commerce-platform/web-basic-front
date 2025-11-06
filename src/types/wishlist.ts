@@ -1,5 +1,7 @@
 /** 찜 상품 타입 정의 */
 
+// --- 카테고리 ---
+
 export type Category =
   | "electronics" // 전자제품
   | "fashion" // 패션의류
@@ -7,6 +9,7 @@ export type Category =
   | "living" // 생활용품
   | "other"; // 기타
 
+// --- 인터페이스 ---
 export interface WishlistItem {
   id: string;
   name: string;
@@ -19,6 +22,7 @@ export interface WishlistItem {
 
 export type NewWishlistItem = Omit<WishlistItem, "id">;
 
+// --- 라벨/옵션 ---
 export const categoryLabels: Record<Category, string> = {
   electronics: "전자제품",
   fashion: "패션의류",

@@ -10,6 +10,7 @@ interface WishlistDisplayProps {
 }
 
 export function WishlistDisplay({ items, onDelete }: WishlistDisplayProps) {
+  // --- 빈 목록 처리 ---
   if (items.length === 0) {
     return (
       <Card className="w-full bg-white">
@@ -24,6 +25,7 @@ export function WishlistDisplay({ items, onDelete }: WishlistDisplayProps) {
       </Card>
     );
   }
+  // --- 렌더 ---
   return (
     <Card className="w-full bg-white">
       <CardContent>

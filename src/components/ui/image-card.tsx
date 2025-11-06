@@ -1,4 +1,3 @@
-/** 이미지 카드 */
 import { cn } from "@/lib/utils"
 
 type Props = {

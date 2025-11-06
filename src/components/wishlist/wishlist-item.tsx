@@ -17,12 +17,14 @@ interface WishlistItemProps {
 }
 
 export function WishlistItem({ item, onDelete }: WishlistItemProps) {
+  // --- 삭제 핸들러 ---
   const handleDelete = () => {
     if (window.confirm(`"${item.name}" 상품을 삭제하시겠습니까?`)) {
       onDelete(item.id);
     }
   };
 
+  // --- 렌더 ---
   return (
     <Card className="w-full overflow-hidden py-0 bg-white">
       <div className="flex h-full flex-row items-center">

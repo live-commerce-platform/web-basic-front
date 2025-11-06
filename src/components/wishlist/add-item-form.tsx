@@ -25,6 +25,7 @@ interface AddItemFormProps {
 }
 
 export function AddItemForm({ onSubmit }: AddItemFormProps) {
+  // --- 상태 ---
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState<Category>("electronics");
@@ -32,6 +33,7 @@ export function AddItemForm({ onSubmit }: AddItemFormProps) {
   const [link, setLink] = useState("");
   const [image, setImage] = useState("");
 
+  // --- 제출 핸들러 ---
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!name.trim() || !price) {
@@ -60,6 +62,7 @@ export function AddItemForm({ onSubmit }: AddItemFormProps) {
     setImage("");
   };
 
+  // --- 렌더 ---
   return (
     <Card className="w-full bg-white">
       <CardContent>

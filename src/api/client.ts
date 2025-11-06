@@ -4,6 +4,7 @@ import axios, { AxiosError } from "axios";
 import type { AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { API_BASE_URL } from "./endpoints";
 
+// --- Axios 인스턴스(클라이언트) ---
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
   timeout: 10000,
@@ -12,7 +13,7 @@ export const apiClient = axios.create({
   },
 });
 
-/** 요청 인터셉터: 공통 처리(로그 등) */
+// --- 요청 인터셉터 ---
 apiClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     console.log("🚀 API Request:", {
@@ -28,7 +29,7 @@ apiClient.interceptors.request.use(
   }
 );
 
-/** 응답 인터셉터: 공통 처리(로그/에러) */
+// --- 응답 인터셉터 ---
 apiClient.interceptors.response.use(
   (response: AxiosResponse) => {
     console.log("✅ API Response:", {
